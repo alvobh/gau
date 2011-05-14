@@ -48,10 +48,12 @@ public class Game {
    }
 
    public String results () {
-	   String aux = "";
+	   String aux = "-----------\n";
 	   for (int i = 0; i < _podium.size(); i++) {
 	      aux += (i+1) + ". " + _podium.get(i);
-	      aux += " : " + _points[i] + "ptos\n";
+	      if (_points != null)
+	         aux += " : " + _points[i] + "ptos";
+	      aux += "\n";
 	   }
 	   return aux;
    }
@@ -68,15 +70,16 @@ public class Game {
    
       PlugBoard plugs = new PlugBoard();
       boolean[] active, podium;
-      podium = new boolean[_points.length];
+      podium = new boolean[_teams.size()];
       
-      while (_podium.size() < _points.length) {
+      while (_podium.size() < _teams.size()) {
 		   active = plugs.read();
 		   int i = 0;
 		   while (i < active.length) {
 			   if (active[i] && !podium[i]) {
 			      podium[i] = true;
 			      _podium.add(_teams.get(i));
+			      System.out.println (_teams.get(i));
 			   }
 			   i++;
 		   }
