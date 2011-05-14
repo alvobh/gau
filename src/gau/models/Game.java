@@ -3,16 +3,22 @@ package gau.models;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-class Game
-{
+public class Game {
+
    private int[] _points;
    private String _name;
    private ArrayList<RealTeam> _podium, _teams;
 
-   public Game (String name, String points, int nteams) {
-	   _points = parsePoints(points, nteams);
-	   _name = name;
-	   _podium = new ArrayList<RealTeam> (nteams);
+   public Game (ArrayList<RealTeam> teams) {
+	   _teams  = teams;
+	   _podium = new ArrayList<RealTeam> ();
+   }
+
+   public Game (String name, int[] points, ArrayList<RealTeam> teams) {
+	   _name   = name;
+	   _points = points;
+	   _teams  = teams;
+	   _podium = new ArrayList<RealTeam> ();
    }
    
    public int[] parsePoints (String points, int nteams) {

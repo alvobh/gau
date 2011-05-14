@@ -1,3 +1,5 @@
 *.class
 *.log
-dist/
+build/
+classes/
+times.txt

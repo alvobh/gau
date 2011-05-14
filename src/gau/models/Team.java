@@ -1,6 +1,6 @@
 package gau.models;
 
-class Team implements Comparable {
+public class Team implements Comparable {
 
    private String _name;
    

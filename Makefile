@@ -1,6 +1,12 @@
+all: comp jar
+
 comp:
-	javac -extdirs jars -d dist models/*.java tests/*.java
+	javac -extdirs jars -d dist *.java models/*.java tests/*.java
+
+jar:
+	jar cmf mainClass gau.jar gau
 
 run:
-	java dist/gau/Main
+	cd dist
+	java -cp dist gau.Main
 

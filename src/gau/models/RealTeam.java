@@ -2,15 +2,17 @@ package gau.models;
 
 import java.util.TreeSet;
 
-class RealTeam {
+public class RealTeam {
 
    private TreeSet<Team> _teams;
-   private int _plugID;
 
-   public RealTeam (Team t, int plugID) {
+   public RealTeam () {
+	   _teams = new TreeSet<Team> ();
+	}
+
+   public RealTeam (Team t) {
 	   _teams = new TreeSet<Team> ();
 	   _teams.add (t);
-	   _plugID = plugID;
    }
 
    public boolean add (Team t) {
@@ -22,7 +24,7 @@ class RealTeam {
    }
 
    public String toString () {
-	   return "[" + _plugID + "] " + _teams.toString ();
+	   return _teams.toString ();
    }
 
 }
