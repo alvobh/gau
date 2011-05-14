@@ -1,8 +1,10 @@
+package gau.models;
+
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.ptr.*;
 
-public class Board {
+public class PlugBoard {
 
    public interface EasyLab extends Library {
       public int SearchDevices (ByteByReference ndevs);
@@ -16,7 +18,7 @@ public class Board {
    private EasyLab _board;
    private byte _dev;
    
-   public Board () throws Exception{
+   public PlugBoard () throws Exception{
       init(0);
       config();
    }
@@ -26,7 +28,7 @@ public class Board {
       ByteByReference ndevs = new ByteByReference();      
       int tmp = _board.SearchDevices(ndevs);
       if (tmp != 0 || ndevs.getValue() == 0)
-         throw new Exception ("Placa n„o encontrada"); 
+         throw new Exception ("Placa n√£o encontrada"); 
       _dev = (byte) dev;
    }
 
@@ -36,7 +38,7 @@ public class Board {
          throw new Exception ("Falha em configurar portas como entradas");
       tmp = _board.SetOutputPorts(_dev,511); // all ports in low activation
       if (tmp != 0)
-         throw new Exception ("Falha em configurar portas para ativaÁ„o em baixo");
+         throw new Exception ("Falha em configurar portas para ativa√ß√£o em baixo");
    }
 
    public boolean[] read () throws Exception {
