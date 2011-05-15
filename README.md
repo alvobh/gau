@@ -9,11 +9,11 @@ Projeto destinado a criar um sistema de gestão para a Gincana Ativa Urbana, org
 
 ### Estado atual
 
-Em termos gerais, Hoje temos a apenas a funcionalidade mínima requerida, mas já desenvolvida sobre uma arquitetura de entidades.
+Em termos gerais, hoje temos apenas a funcionalidade mínima requerida, mas já desenvolvida sobre uma arquitetura de entidades.
 
-Em termos mais específicos, hoje o sistema apenas lê o input gerado pelo sistema de botões, associa cada botão a sua devida equipe e imprime a colocação das equipes baseada na ordem em que as mesmas pressionaram o seu respectivo botão.
+Em termos mais específicos, hoje o sistema apenas lê o _input_ gerado pelo sistema de botões, associa cada botão a sua devida equipe e imprime a colocação das equipes baseada na ordem em que as mesmas pressionaram o seu respectivo botão.
 
-Além disso, temos um código legado para a interface gráfica, que a Suellen fez ano passado, quando tentamos frustadamente mudar o sistema de botões. No entanto, esse código ainda não está integrado à funcionalidade básica descrita acima.
+Além disso, temos um código praticamente pronto para a interface gráfica do sistema de gestão que a Suellen fez ano passado quando tentamos frustadamente mudar o sistema de botões. No entanto, esse código ainda não está integrado à funcionalidade básica descrita acima, pois o código dessa funcionalidade é novo, surgiu acompanhando o novo sistema de botões.
 
 
 ### Objetivos
