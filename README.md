@@ -18,7 +18,7 @@ Além disso, temos um código praticamente pronto para a interface gráfica do s
 
 ### Objetivos
 
-1. Integrar a interface gráfica à funcionalidade já existente
+1. Integrar a interface gráfica à funcionalidade já existente.
 2. Expandir o sistema de forma a produzir um sistema para gerenciar toda a gincana e não só a monitoração de provas que utilizam botões.
 
 
