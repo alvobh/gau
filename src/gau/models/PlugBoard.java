@@ -18,7 +18,7 @@ public class PlugBoard {
    private EasyLab _board;
    private byte _dev;
    
-   public PlugBoard () throws Exception{
+   public PlugBoard () throws Exception {
       init(0);
       config();
    }

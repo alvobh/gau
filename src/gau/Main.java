@@ -9,10 +9,8 @@ public class Main {
 
    public static void main(String[] args) throws Exception{
 	   ArrayList<RealTeam> teams = getTeams();
-	   System.out.println (teams);
 	   Game prova = new Game(teams);
 	   prova.startWithPlugs();
-	   System.out.println (prova.results());
    }
    
    private static ArrayList<RealTeam> getTeams () throws Exception{

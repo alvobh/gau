@@ -66,23 +66,39 @@ public class Game {
 	   return _name;
    }
 
-   public void startWithPlugs () throws Exception {
-   
-      PlugBoard plugs = new PlugBoard();
-      boolean[] active, podium;
-      podium = new boolean[_teams.size()];
-      
-      while (_podium.size() < _teams.size()) {
-		   active = plugs.read();
-		   int i = 0;
-		   while (i < active.length) {
-			   if (active[i] && !podium[i]) {
-			      podium[i] = true;
-			      _podium.add(_teams.get(i));
-			      System.out.println (_teams.get(i));
-			   }
-			   i++;
-		   }
+   public boolean startWithPlugs (){
+
+      try {
+
+         PlugBoard plugs = new PlugBoard();
+         boolean[] active, podium;
+         podium = new boolean[_teams.size()];
+         int place = 1;
+         while (_podium.size() < _teams.size()) {
+		      active = plugs.read();
+		      int i = 0;
+		      while (i < active.length) {
+			      if (active[i] && !podium[i]) {
+			         podium[i] = true;
+			         _podium.add(_teams.get(i));
+			         System.out.println (place + ". " +  _teams.get(i));
+			         place++;
+			      }
+			      i++;
+		      }
+         }
+         return true;
+
+      } catch (UnsatisfiedLinkError e) {
+
+         System.out.println ("Driver do EasyLab não encontrado!");
+         return false;    
+
+      } catch (Exception e) {
+
+         System.out.println (e);
+         return false; 
+
       }
 
    }
