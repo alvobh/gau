@@ -2,16 +2,17 @@ package gau.gui;
 
 import java.awt.GridBagLayout;
 import javax.swing.JPanel;
-import java.awt.Dimension;
-import java.awt.Rectangle;
 import javax.swing.JTextPane;
 import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import javax.swing.JButton;
+import java.awt.Dimension;
+import java.awt.Color;
 
 public class GameWithPlugs extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextPane jTextPane = null;
+	private JButton jButton = null;
 
 	/**
 	 * This is the default constructor
@@ -27,12 +28,19 @@ public class GameWithPlugs extends JPanel {
 	 * @return void
 	 */
 	private void initialize() {
+		GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
+		gridBagConstraints4.gridx = 1;
+		gridBagConstraints4.gridy = 0;
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
-		gridBagConstraints.gridy = 22;
-		gridBagConstraints.gridx = 42;
+		gridBagConstraints.fill = GridBagConstraints.BOTH;
+		gridBagConstraints.gridy = 0;
+		gridBagConstraints.weightx = 1.0;
+		gridBagConstraints.weighty = 1.0;
+		gridBagConstraints.gridx = 0;
+		this.setSize(519, 342);
 		this.setLayout(new GridBagLayout());
-		this.setBounds(new Rectangle(0, 0, 640, 480));
 		this.add(getJTextPane(), gridBagConstraints);
+		this.add(getJButton(), gridBagConstraints4);
 	}
 
 	/**
@@ -43,13 +51,23 @@ public class GameWithPlugs extends JPanel {
 	private JTextPane getJTextPane() {
 		if (jTextPane == null) {
 			jTextPane = new JTextPane();
-			jTextPane.addCaretListener(new javax.swing.event.CaretListener() {
-				public void caretUpdate(javax.swing.event.CaretEvent e) {
-					System.out.println("caretUpdate()"); // TODO Auto-generated Event stub caretUpdate()
-				}
-			});
+			jTextPane.setEditable(false);
+			jTextPane.setBackground(new Color(238, 238, 238));
 		}
 		return jTextPane;
 	}
 
-}  //  @jve:decl-index=0:visual-constraint="26,11"
+	/**
+	 * This method initializes jButton	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getJButton() {
+		if (jButton == null) {
+			jButton = new JButton();
+			jButton.setText("Iniciar");
+		}
+		return jButton;
+	}
+
+}  //  @jve:decl-index=0:visual-constraint="10,10"

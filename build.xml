@@ -16,7 +16,7 @@
     <target name="mkdirs">
         <!-- <mkdir dir="${test.results.dir}" /> -->
         <!--  <mkdir dir="${test.reports.dir}"/> -->
-        <mkdir dir="classes/src"/>
+        <mkdir dir="classes"/>
     	  <!-- <mkdir dir="classes/test"/> -->
         <!-- <mkdir dir="classes/junit"/> -->
     	<mkdir dir="build"/>
@@ -35,7 +35,7 @@
 	</target>
 
 	<target name="compile" depends="mkdirs">
-        <javac destdir="classes/src" includes="**/*.java" debug="true">
+        <javac destdir="classes" includes="**/*.java" debug="true">
             <src path="src" />
             <classpath refid="libraries" />
             <classpath refid="one-jar.libraries"/>
@@ -66,7 +66,7 @@
                 <attribute name="One-Jar-Main-Class" value="gau.Main"/>
             </manifest>
             <main>
-                <fileset dir="classes/src"/>
+                <fileset dir="classes"/>
             </main>
             <lib>
                 <fileset dir="lib" includes="*.jar" />

@@ -9,7 +9,8 @@ import gau.gui.*;
 public class Main {
 
    public static void main(String[] args) throws Exception{
-       GameWithPlugs a = new GameWithPlugs(); 
+       GuiMain gui = new GuiMain(); 
+       gui.setVisible(true);
    }	
 	
    private static void start() throws Exception{
