@@ -3,3 +3,7 @@
 build/
 classes/
 times.txt
+ide/
+.project
+.classpath
+*.jpg

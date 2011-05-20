@@ -4,10 +4,15 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
 import gau.models.*;
+import gau.gui.*;
 
 public class Main {
 
    public static void main(String[] args) throws Exception{
+       GameWithPlugs a = new GameWithPlugs(); 
+   }	
+	
+   private static void start() throws Exception{
 	   ArrayList<RealTeam> teams = getTeams();
 	   Game prova = new Game(teams);
 	   prova.startWithPlugs();

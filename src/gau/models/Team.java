@@ -1,6 +1,6 @@
 package gau.models;
 
-public class Team implements Comparable {
+public class Team implements Comparable<Team> {
 
    private String _name;
    
@@ -8,8 +8,8 @@ public class Team implements Comparable {
 	   _name = name;
    }
 
-   public int compareTo (Object obj) {
-	   return _name.compareTo (((Team) obj)._name);
+   public int compareTo (Team t) {
+	   return _name.compareTo (t._name);
    }
 
    public String toString () {
