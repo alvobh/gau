@@ -87,11 +87,10 @@ public class Game {
    }
    
    public String resume () throws Exception{
-       boolean[] active;
        boolean changed = false;
        String update = "";
        while (!changed && _podium.size() < _teams.size()) {
-		  active = _plugs.read();
+    	  boolean[] active = _plugs.read();
 		  int i = 0;
 		  while (i < active.length) {
 			 if (active[i] && !_podiumCheck[i]) {
@@ -110,9 +109,16 @@ public class Game {
     	return _podium.size() < _teams.size();
     }
 
-	public void finish() {
-		// TODO Auto-generated method stub
-		
+	public String finish() {
+	  int i = 0;
+      String update = "";
+	  while (i < _podiumCheck.length) {
+		 if (!_podiumCheck[i]) {
+			 _podium.add(_teams.get(i));
+			 update += (_place++) + ". " +  _teams.get(i) + "\n";
+		 }
+      }
+	  return update;	
 	}
 
 }

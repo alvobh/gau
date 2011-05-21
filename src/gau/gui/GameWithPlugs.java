@@ -80,9 +80,8 @@ public class GameWithPlugs extends JPanel {
 						jTextPane.setText("");
 						jButton.setText("Finalizar");
 						startGame();
-					} else {
-						jButton.setText("Iniciar");						
 					}
+					jButton.setText("Iniciar");				
 				}
 			});
 		}
@@ -97,13 +96,13 @@ public class GameWithPlugs extends JPanel {
 				while (gameRunning && prova.isActive()) {
 					try {
 						String update = prova.resume();
-						jTextPane.setText(update);
+						jTextPane.setText(jTextPane.getText() + update);
 					} catch (Exception e) {
-						jTextPane.setText(e.toString());
+						jTextPane.setText(jTextPane.getText() + e.toString());
 						break;
 					}
 				}
-				if (!gameRunning) prova.finish();
+				if (!gameRunning) jTextPane.setText(prova.finish());
 			}
 		} catch (Exception e) {
 			System.out.println (e);
