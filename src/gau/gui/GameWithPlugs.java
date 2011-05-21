@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingWorker;
-
+import java.lang.Thread;
 
 public class GameWithPlugs extends JPanel {
 
@@ -105,25 +105,28 @@ public class GameWithPlugs extends JPanel {
 	    		if (prova.start()) {
 	    			while (!isCancelled() && prova.isActive()) {
 	    				try {
-	    					String update = prova.resume();
+	    					String update = prova.test();
 	    					publish(update);
 	    				} catch (Exception e) {
 	    					publish (e.toString());
 	    					break;
 	    				}
 	    			}
-	    			if (isCancelled()) publish (prova.finish());
+	    			if (isCancelled()) {
+	    				System.out.println("cancelled");
+	    				publish (prova.finish());
+	    			}
 	    		}
 	    	} catch (Exception e) {
 	    		System.out.println (e);
 	    	}
+	    	publish ("The End.\n");
 	        return null;
 	    }
 	    
 	    @Override
 	    public void done() {
 	    	toggleButton();
-	    	publish ("The End.\n");
 	    }
 	    
 	    private void toggleButton () {

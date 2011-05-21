@@ -1,6 +1,7 @@
 package gau.models;
 
 import java.util.ArrayList;
+import java.lang.Thread;
 
 public class Game {
 
@@ -72,8 +73,9 @@ public class Game {
    public boolean start (){
 
       try {
-         _plugs = new PlugBoard();
+        //  _plugs = new PlugBoard();
          _podiumCheck = new boolean[_teams.size()];
+         _place = 1;
       } catch (UnsatisfiedLinkError e) {
          System.out.println ("Driver do EasyLab não encontrado!");
          return false;
@@ -104,7 +106,14 @@ public class Game {
        }
        return update;
    }
-
+   
+   public String test () {
+	   try {Thread.sleep(2000);} catch(Exception e){}
+	   _podiumCheck[_place-1] = true;
+	   _podium.add(_teams.get(_place-1));
+	   return _place  + ". " +  _teams.get((_place++)-1) + "\n";
+   }
+ 
     public boolean isActive() {
     	return _podium.size() < _teams.size();
     }
@@ -117,6 +126,7 @@ public class Game {
 			 _podium.add(_teams.get(i));
 			 update += (_place++) + ". " +  _teams.get(i) + "\n";
 		 }
+		 i++;
       }
 	  return update;	
 	}
