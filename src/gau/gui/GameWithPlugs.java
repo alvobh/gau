@@ -1,18 +1,25 @@
 package gau.gui;
 
+import gau.Utils;
+import gau.models.Game;
+import gau.models.RealTeam;
+
+import java.awt.Color;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
-import java.awt.GridBagConstraints;
-import javax.swing.JButton;
-import java.awt.Dimension;
-import java.awt.Color;
+
 
 public class GameWithPlugs extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextPane jTextPane = null;
 	private JButton jButton = null;
+	private boolean gameRunning = false;
 
 	/**
 	 * This is the default constructor
@@ -66,8 +73,42 @@ public class GameWithPlugs extends JPanel {
 		if (jButton == null) {
 			jButton = new JButton();
 			jButton.setText("Iniciar");
+			jButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					gameRunning = !gameRunning;
+					if (gameRunning) {
+						jTextPane.setText("");
+						jButton.setText("Finalizar");
+						startGame();
+					} else {
+						jButton.setText("Iniciar");						
+					}
+				}
+			});
 		}
 		return jButton;
+	}
+	
+	public void startGame() {
+		try {
+			ArrayList<RealTeam> teams = Utils.getTeams();
+			Game prova = new Game(teams);
+			if (prova.start()) {
+				while (gameRunning && prova.isActive()) {
+					try {
+						String update = prova.resume();
+						jTextPane.setText(update);
+					} catch (Exception e) {
+						jTextPane.setText(e.toString());
+						break;
+					}
+				}
+				if (!gameRunning) prova.finish();
+			}
+		} catch (Exception e) {
+			System.out.println (e);
+		}
+
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

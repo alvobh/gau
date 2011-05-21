@@ -7,6 +7,10 @@ public class Game {
    private int[] _points;
    private String _name;
    private ArrayList<RealTeam> _podium, _teams;
+   
+   PlugBoard _plugs;
+   boolean[] _podiumCheck;
+   int _place;
 
    public Game (ArrayList<RealTeam> teams) {
 	   _teams  = teams;
@@ -65,42 +69,51 @@ public class Game {
 	   return _name;
    }
 
-   public boolean startWithPlugs (){
+   public boolean start (){
 
       try {
-
-         PlugBoard plugs = new PlugBoard();
-         boolean[] active, podium;
-         podium = new boolean[_teams.size()];
-         int place = 1;
-         while (_podium.size() < _teams.size()) {
-		      active = plugs.read();
-		      int i = 0;
-		      while (i < active.length) {
-			      if (active[i] && !podium[i]) {
-			         podium[i] = true;
-			         _podium.add(_teams.get(i));
-			         System.out.println (place + ". " +  _teams.get(i));
-			         place++;
-			      }
-			      i++;
-		      }
-         }
-         return true;
-
+         _plugs = new PlugBoard();
+         _podiumCheck = new boolean[_teams.size()];
       } catch (UnsatisfiedLinkError e) {
-
          System.out.println ("Driver do EasyLab não encontrado!");
-         return false;    
-
+         return false;
       } catch (Exception e) {
-
          System.out.println (e);
          return false; 
-
       }
+      
+      return true;
 
    }
+   
+   public String resume () throws Exception{
+       boolean[] active;
+       boolean changed = false;
+       String update = "";
+       while (!changed && _podium.size() < _teams.size()) {
+		  active = _plugs.read();
+		  int i = 0;
+		  while (i < active.length) {
+			 if (active[i] && !_podiumCheck[i]) {
+				_podiumCheck[i] = true;
+			    _podium.add(_teams.get(i));
+			    update += (_place++) + ". " +  _teams.get(i) + "\n";
+			    changed = true;
+			 }
+			 i++;
+		  }
+       }
+       return update;
+   }
+
+    public boolean isActive() {
+    	return _podium.size() < _teams.size();
+    }
+
+	public void finish() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
 
