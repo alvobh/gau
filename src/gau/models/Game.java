@@ -1,104 +1,150 @@
 package gau.models;
 
 import java.util.ArrayList;
-import java.lang.Thread;
 
+/**
+ * @author mateusgm
+ *
+ */
 public class Game {
 
-   private int[] _points;
-   private String _name;
-   private ArrayList<RealTeam> _podium, _teams;
-   
-   PlugBoard _plugs;
-   boolean[] _podiumCheck;
-   int _place;
+   /**
+    * 
+    */
+   private int[] points;
 
-   public Game (ArrayList<RealTeam> teams) {
-      _teams  = teams;
-      _podium = new ArrayList<RealTeam> ();
+   /**
+    * 
+    */
+   private String name;
+
+   /**
+    * 
+    */
+   private ArrayList<RealTeam> podium, teams;
+
+   /**
+    * 
+    */
+   PlugBoard plugs;
+
+   /**
+    * 
+    */
+   boolean[] podiumCheck;
+
+   /**
+    * 
+    */
+   int place;
+
+   /**
+    * @param teamsp
+    */
+   public Game(final ArrayList<RealTeam> teamsp) {
+      teams  = teamsp;
+      podium = new ArrayList<RealTeam>();
    }
 
-   public Game (String name, int[] points, ArrayList<RealTeam> teams) {
-      _name   = name;
-      _points = points;
-      _teams  = teams;
-      _podium = new ArrayList<RealTeam> ();
+   /**
+    * @param namep
+    * @param pointsp
+    * @param teamsp
+    */
+   public Game(final String namep, final int[] pointsp,
+         final ArrayList<RealTeam> teamsp) {
+      name   = namep;
+      points = pointsp;
+      teams  = teamsp;
+      podium = new ArrayList<RealTeam>();
    }
-   
-   public int[] parsePoints (String points, int nteams) {
 
-      int[] p_aux = new int[nteams];
-      String[] aux = points.split ("/");
+   /**
+    * @param pointsp
+    * @param nteams
+    * @return
+    */
+   public final int[] parsePoints(final String pointsp, final int nteams) {
+
+      int[] pointsAux = new int[nteams];
+      String[] aux = pointsp.split("/");
       boolean parser = true;
       int end = 0;
 
       for (int i = 0; i < nteams; i++) {
          if (parser) {
-            if (i == aux.length) { 
+            if (i == aux.length) {
                parser = false;
                end = 0;
             } else if (aux[i].equals("...")) {
                parser = false;
-               end = p_aux[i-1];
+               end = pointsAux[i - 1];
             } else {
                end = Integer.parseInt(aux[i]);
             }
          }
-         p_aux[i] = end;
+         pointsAux[i] = end;
       }
-   
-      return p_aux;
-   
+      return pointsAux;
+
    }
 
-   public String results () {
+   /**
+    * @return
+    */
+   public final String results() {
       String aux = "-----------\n";
-      for (int i = 0; i < _podium.size(); i++) {
-         aux += (i+1) + ". " + _podium.get(i);
-         if (_points != null)
-            aux += " : " + _points[i] + "ptos";
+      for (int i = 0; i < podium.size(); i++) {
+         aux += (i + 1) + ". " + podium.get(i);
+         if (points != null) {
+            aux += " : " + points[i] + "ptos";
+         }
          aux += "\n";
       }
       return aux;
    }
 
-   public int size () {
-      return _points.length;
+   /**
+    * @return
+    */
+   public final int size() {
+      return teams.size();
    }
 
-   public String toString () {
-      return _name;
+   /* (non-Javadoc)
+    * @see java.lang.Object#toString()
+    */
+   @Override
+   public final String toString() {
+      return name;
    }
 
-   public boolean start (){
-
-      try {
-        //  _plugs = new PlugBoard();
-         _podiumCheck = new boolean[_teams.size()];
-         _place = 1;
-      } catch (UnsatisfiedLinkError e) {
-         System.out.println ("Driver do EasyLab não encontrado!");
-         return false;
-      } catch (Exception e) {
-         System.out.println (e);
-         return false; 
-      }
-      
+   /**
+    * @return
+    * @throws Exception
+    */
+   public final boolean start() throws Exception {
+      plugs = new PlugBoard();
+      podiumCheck = new boolean[teams.size()];
+      place = 1;
       return true;
-
    }
-   
-   public String resume () throws Exception{
+
+   /**
+    * @return
+    * @throws Exception
+    */
+   public final String resume() throws Exception {
        boolean changed = false;
        String update = "";
-       while (!changed && _podium.size() < _teams.size()) {
-         boolean[] active = _plugs.read();
+       while (!changed && podium.size() < teams.size()) {
+         boolean[] active = plugs.read();
         int i = 0;
         while (i < active.length) {
-          if (active[i] && !_podiumCheck[i]) {
-            _podiumCheck[i] = true;
-             _podium.add(_teams.get(i));
-             update += (_place++) + ". " +  _teams.get(i) + "\n";
+          if (active[i] && !podiumCheck[i]) {
+            podiumCheck[i] = true;
+             podium.add(teams.get(i));
+             update += (place++) + ". " +  teams.get(i) + "\n";
              changed = true;
           }
           i++;
@@ -106,32 +152,42 @@ public class Game {
        }
        return update;
    }
-   
-   public String test () {
-      try {Thread.sleep(2000);} catch(Exception e){}
-      _podiumCheck[_place-1] = true;
-      _podium.add(_teams.get(_place-1));
-      return _place  + ". " +  _teams.get((_place++)-1) + "\n";
-   }
- 
-    public boolean isActive() {
-       return _podium.size() < _teams.size();
-    }
 
-   public String finish() {
-     int i = 0;
-      String update = "";
-     while (i < _podiumCheck.length) {
-       if (!_podiumCheck[i]) {
-          _podium.add(_teams.get(i));
-          update += (_place++) + ". " +  _teams.get(i) + "\n";
-       }
-       i++;
+   /**
+    * @return
+    */
+   public final String test () {
+      try {
+         Thread.sleep(2000);
+      } catch (Exception e) {
+         return "";
       }
-     return update;   
+      podiumCheck[place - 1] = true;
+      podium.add(teams.get(place - 1));
+      return place  + ". " +  teams.get((place++) - 1) + "\n";
+   }
+
+    /**
+    * @return
+    */
+   public final boolean isActive() {
+      return podium.size() < teams.size();
+   }
+
+   /**
+    * @return
+    */
+   public final String finish() {
+      int i = 0;
+      String update = "";
+      while (i < podiumCheck.length) {
+         if (!podiumCheck[i]) {
+            podium.add(teams.get(i));
+            update += (place++) + ". " +  teams.get(i) + "\n";
+         }
+         i++;
+      }
+      return update;
    }
 
 }
-
-
-

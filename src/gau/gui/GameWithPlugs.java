@@ -101,13 +101,8 @@ public class GameWithPlugs extends JPanel {
              Game prova = new Game(teams);
              if (prova.start()) {
                 while (!isCancelled() && prova.isActive()) {
-                   try {
-                      String update = prova.test();
-                      publish(update);
-                   } catch (Exception e) {
-                      publish(e.toString());
-                      break;
-                   }
+                   String update = prova.test();
+                   publish(update);
                 }
                 if (isCancelled()) {
                    System.out.println("cancelled");
@@ -116,8 +111,10 @@ public class GameWithPlugs extends JPanel {
              }
           } catch (Exception e) {
              publish(e.toString());
+          } catch (UnsatisfiedLinkError e) {
+             publish("Driver do EasyLab não encontrado!");
           }
-          publish ("The End.\n");
+          publish("The End.\n");
           return null;
        }
 
