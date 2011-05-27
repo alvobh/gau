@@ -21,12 +21,23 @@ public class GameWithPlugs extends JPanel {
    private JTextPane jTextPane = null;
    private JButton jButton = null;
    private GameRun game = null;
+   private boolean test = false;
 
    /**
     * This is the default constructor.
     */
    public GameWithPlugs() {
       super();
+      initialize();
+   }
+
+   /**
+    * This is the default constructor.
+    * @param testp
+    */
+   public GameWithPlugs(final boolean testp) {
+      super();
+      test = testp;
       initialize();
    }
 
@@ -99,9 +110,9 @@ public class GameWithPlugs extends JPanel {
           try {
              ArrayList<RealTeam> teams = Utils.getTeams();
              Game prova = new Game(teams);
-             if (prova.start()) {
+             if (prova.start(test)) {
                 while (!isCancelled() && prova.isActive()) {
-                   String update = prova.test();
+                   String update = prova.resume();
                    publish(update);
                 }
                 if (isCancelled()) {

@@ -11,12 +11,22 @@ public class GuiMain extends JFrame {
    private static final long serialVersionUID = 1L;
    private JPanel jContentPane = null;
    private JTabbedPane jTabbedPane = null;
+   private boolean test = false;
 
    /**
     * This is the default constructor.
     */
    public GuiMain() {
       super();
+      initialize();
+   }
+
+   /**
+    * This is the default constructor.
+    */
+   public GuiMain(boolean testp) {
+      super();
+      test = testp;
       initialize();
    }
 
@@ -51,7 +61,7 @@ public class GuiMain extends JFrame {
    private JTabbedPane getJTabbedPane() {
       if (jTabbedPane == null) {
          jTabbedPane = new JTabbedPane();
-         jTabbedPane.addTab("Bot√µes", null, new GameWithPlugs(), null);
+         jTabbedPane.addTab("Botıes", null, new GameWithPlugs(test), null);
       }
       return jTabbedPane;
    }

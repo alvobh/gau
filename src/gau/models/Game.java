@@ -37,6 +37,11 @@ public class Game {
     * 
     */
    int place;
+   
+   /**
+    * 
+    */
+   boolean test;
 
    /**
     * @param teamsp
@@ -123,10 +128,13 @@ public class Game {
     * @return
     * @throws Exception
     */
-   public final boolean start() throws Exception {
-      plugs = new PlugBoard();
+   public final boolean start(boolean testp) throws Exception {
+      test = testp;
       podiumCheck = new boolean[teams.size()];
       place = 1;
+      if (!test) {
+         plugs = new PlugBoard();
+      }
       return true;
    }
 
@@ -135,28 +143,32 @@ public class Game {
     * @throws Exception
     */
    public final String resume() throws Exception {
-       boolean changed = false;
-       String update = "";
-       while (!changed && podium.size() < teams.size()) {
-         boolean[] active = plugs.read();
-        int i = 0;
-        while (i < active.length) {
-          if (active[i] && !podiumCheck[i]) {
-            podiumCheck[i] = true;
-             podium.add(teams.get(i));
-             update += (place++) + ". " +  teams.get(i) + "\n";
-             changed = true;
+      if (test) {
+         return resumeTest();
+      } else {
+         boolean changed = false;
+         String update = "";
+         while (!changed && podium.size() < teams.size()) {
+           boolean[] active = plugs.read();
+          int i = 0;
+          while (i < active.length) {
+            if (active[i] && !podiumCheck[i]) {
+              podiumCheck[i] = true;
+               podium.add(teams.get(i));
+               update += (place++) + ". " +  teams.get(i) + "\n";
+               changed = true;
+            }
+            i++;
           }
-          i++;
-        }
-       }
-       return update;
+         }
+         return update;
+      }
    }
 
    /**
     * @return
     */
-   public final String test () {
+   public final String resumeTest() {
       try {
          Thread.sleep(2000);
       } catch (Exception e) {

@@ -72,21 +72,18 @@
                 <fileset dir="lib" includes="*.jar" />
             </lib>
 		</one-jar>
-		<!--
 		<one-jar destfile="build/test-gau.jar">
             <manifest>
                 <attribute name="Main-Class" value="gau.Boot"/>
-            	<attribute name="One-Jar-Main-Class" value="gau.test.Test"/>
+            	<attribute name="One-Jar-Main-Class" value="gau.tests.TestMain"/>
             </manifest>
-            <zipfileset src="${one-jar.ant.jar}" includes="**/Testable.class"/>
 			<main>
-				<fileset dir="classes/test"/>
+				<fileset dir="classes"/>
 			</main>
 			<lib>
 				<fileset dir="lib" includes="*.jar" />
 			</lib>
 		</one-jar>
-		-->
 		<delete dir="${temp.dir}" />
 	</target>
 
