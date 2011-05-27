@@ -116,7 +116,6 @@ public class GameWithPlugs extends JPanel {
                    publish(update);
                 }
                 if (isCancelled()) {
-                   System.out.println("cancelled");
                    publish(prova.finish());
                 }
              }

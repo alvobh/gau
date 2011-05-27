@@ -52,7 +52,15 @@ public class RealTeam {
     */
    @Override
    public final String toString() {
-      return teams.toString();
+      String results = null;
+      for (Team team : teams) {
+         if (results == null) {
+            results = team.toString();
+         } else {
+            results += ", " + team.toString();
+         }
+      }
+      return results;
    }
 
 }

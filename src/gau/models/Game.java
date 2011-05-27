@@ -146,25 +146,29 @@ public class Game {
       if (test) {
          return resumeTest();
       } else {
-         boolean changed = false;
-         String update = "";
-         while (!changed && podium.size() < teams.size()) {
-           boolean[] active = plugs.read();
-          int i = 0;
-          while (i < active.length) {
+         return resumeReal();
+      }
+   }
+   
+   public final String resumeReal() throws Exception {
+      boolean changed = false;
+      String update = "";
+      while (!changed && podium.size() < teams.size()) {
+         boolean[] active = plugs.read();
+         int i = 0;
+         while (i < active.length) {
             if (active[i] && !podiumCheck[i]) {
-              podiumCheck[i] = true;
+               podiumCheck[i] = true;
                podium.add(teams.get(i));
                update += (place++) + ". " +  teams.get(i) + "\n";
                changed = true;
-            }
+               }
             i++;
-          }
          }
-         return update;
       }
+      return update;
    }
-
+   
    /**
     * @return
     */
@@ -172,10 +176,11 @@ public class Game {
       try {
          Thread.sleep(2000);
       } catch (Exception e) {
-         return "";
+
+      } finally {
+         podiumCheck[place - 1] = true;
+         podium.add(teams.get(place - 1));
       }
-      podiumCheck[place - 1] = true;
-      podium.add(teams.get(place - 1));
       return place  + ". " +  teams.get((place++) - 1) + "\n";
    }
 
