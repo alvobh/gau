@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingWorker;
+import java.awt.SystemColor;
 
 public class GameWithPlugs extends JPanel {
 
@@ -55,6 +56,7 @@ public class GameWithPlugs extends JPanel {
       gridBagConstraints.weighty = 1.0;
       gridBagConstraints.gridx = 0;
       this.setSize(519, 342);
+      this.setBackground(new Color(206, 218, 251));
       this.setLayout(new GridBagLayout());
       this.add(getJTextPane(), gridBagConstraints);
       this.add(getJButton(), gridBagConstraints4);
@@ -69,7 +71,7 @@ public class GameWithPlugs extends JPanel {
       if (jTextPane == null) {
          jTextPane = new JTextPane();
          jTextPane.setEditable(false);
-         jTextPane.setBackground(new Color(238, 238, 238));
+         jTextPane.setBackground(new Color(206, 218, 251));
       }
       return jTextPane;
    }
