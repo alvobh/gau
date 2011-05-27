@@ -1,19 +1,35 @@
 package gau.models;
 
+/**
+ * Entity that models a team.
+ * @author mateusgm
+ *
+ */
 public class Team implements Comparable<Team> {
 
-   private String _name;
-   
-   public Team (String name) {
-	   _name = name;
+   /**
+    * Name of the team.
+    */
+   private String name;
+
+   /**
+    * @param namep - name of the team.
+    */
+   public Team(final String namep) {
+      name = namep;
    }
 
-   public int compareTo (Team t) {
-	   return _name.compareTo (t._name);
+   /* (non-Javadoc)
+    * @see java.lang.Comparable#compareTo(java.lang.Object)
+    */
+   @Override
+   public final int compareTo(final Team t) {
+      return name.compareTo(t.name);
    }
 
-   public String toString () {
-	   return _name;
+   @Override
+   public final String toString() {
+      return name;
    }
 
 }

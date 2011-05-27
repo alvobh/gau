@@ -1,17 +1,13 @@
 package gau;
 
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.io.File;
-import gau.models.*;
-import gau.gui.*;
+import gau.gui.GuiMain;
 
 public class Main {
 
-   public static void main(String[] args) throws Exception{
-       GuiMain gui = new GuiMain(); 
+   public static void main(final String[] args) throws Exception {
+       GuiMain gui = new GuiMain();
        gui.setVisible(true);
-   }	
+   }
 
 }
 

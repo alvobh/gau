@@ -2,29 +2,57 @@ package gau.models;
 
 import java.util.TreeSet;
 
+/**
+ * @author mateusgm
+ *
+ */
 public class RealTeam {
 
-   private TreeSet<Team> _teams;
+   /**
+    * the teams contained on this RealTeam.
+    */
+   private TreeSet<Team> teams;
 
-   public RealTeam () {
-	   _teams = new TreeSet<Team> ();
-	}
-
-   public RealTeam (Team t) {
-	   _teams = new TreeSet<Team> ();
-	   _teams.add (t);
+   /**
+    * Creates a RealTeam.
+    */
+   public RealTeam() {
+      teams = new TreeSet<Team>();
    }
 
-   public boolean add (Team t) {
-	   return _teams.add (t);
+   /**
+    * Create a RealTeam.
+    * @param t - team with which the RealTeam will be created.
+    */
+   public RealTeam(final Team t) {
+      teams = new TreeSet<Team>();
+      teams.add(t);
    }
 
-   public boolean contains (Team t) {
-	   return _teams.contains (t);
+   /**
+    * Adds a Team to a RealTeam.
+    * @param t - the team to be added to the RealTeam.
+    * @return true if it was added, false otherwise.
+    */
+   public final boolean add(final Team t) {
+      return teams.add(t);
    }
 
-   public String toString () {
-	   return _teams.toString ();
+   /**
+    * Checks if a RealTeam contains a Team.
+    * @param t - Team to be checked.
+    * @return true if it contains, false otherwise.
+    */
+   public final boolean contains(final Team t) {
+      return teams.contains(t);
+   }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#toString()
+    */
+   @Override
+   public final String toString() {
+      return teams.toString();
    }
 
 }
