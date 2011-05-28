@@ -5,10 +5,14 @@ import gau.gui.GuiMain;
 
 public class Main {
 
-   public static void main(final String[] args) throws Exception {
-      State.init("production");
-       GuiMain gui = new GuiMain();
-       gui.setVisible(true);
+   public static void main(final String[] args) {
+      try {
+         State.init("production");
+         GuiMain gui = new GuiMain();
+         gui.setVisible(true);
+      } catch (Exception e) {
+         System.out.println(e);
+      }
    }
 
 }
