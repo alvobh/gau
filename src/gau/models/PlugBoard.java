@@ -85,7 +85,7 @@ public class PlugBoard {
       ByteByReference ndevs = new ByteByReference();
       int tmp = board.SearchDevices(ndevs);
       if (tmp != 0 || ndevs.getValue() == 0) {
-         throw new Exception("Placa não encontrada");
+         throw new Exception("Placa nao encontrada");
       }
       dev = (byte) devp;
    }
@@ -101,7 +101,7 @@ public class PlugBoard {
       tmp = board.SetOutputPorts(dev, 511); // all ports in low activation
       if (tmp != 0) {
          throw new Exception(
-               "Falha em configurar portas para ativação em baixo");
+               "Falha em configurar portas para ativacao em baixo");
       }
    }
 

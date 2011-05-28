@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JList;
 
 public class GuiMain extends JFrame {
 
@@ -61,7 +62,8 @@ public class GuiMain extends JFrame {
    private JTabbedPane getJTabbedPane() {
       if (jTabbedPane == null) {
          jTabbedPane = new JTabbedPane();
-         jTabbedPane.addTab("Botões", null, new GameWithPlugs(test), null);
+         jTabbedPane.addTab("Prova", null, new GameWithPlugs(test), null);
+         jTabbedPane.addTab("Botoes", null, new Plugs(test), null);
       }
       return jTabbedPane;
    }

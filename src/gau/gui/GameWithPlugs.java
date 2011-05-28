@@ -1,6 +1,6 @@
 package gau.gui;
 
-import gau.Utils;
+import gau.db.Repo;
 import gau.models.Game;
 import gau.models.RealTeam;
 
@@ -14,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingWorker;
-import java.awt.SystemColor;
 
 public class GameWithPlugs extends JPanel {
 
@@ -110,7 +109,7 @@ public class GameWithPlugs extends JPanel {
       @Override
        public Void doInBackground() {
           try {
-             ArrayList<RealTeam> teams = Utils.getTeams();
+             ArrayList<RealTeam> teams = Repo.getTeams();
              Game prova = new Game(teams);
              if (prova.start(test)) {
                 while (!isCancelled() && prova.isActive()) {
@@ -124,7 +123,7 @@ public class GameWithPlugs extends JPanel {
           } catch (Exception e) {
              publish(e.toString());
           } catch (UnsatisfiedLinkError e) {
-             publish("Driver do EasyLab não encontrado!");
+             publish("Driver do EasyLab nao encontrado!");
           }
           publish("The End.\n");
           return null;
