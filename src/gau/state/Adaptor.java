@@ -3,6 +3,8 @@ package gau.state;
 import gau.models.RealTeam;
 import gau.models.Team;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -10,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author mateusgm
@@ -17,15 +20,7 @@ import java.util.List;
  */
 class Adaptor {
 
-   /**
-    * SQLite connection.
-    */
-   private Connection db;
-
-   /**
-    * SQLite query handler.
-    */
-   private Statement query;
+   private DB db;
 
    /**
     * @param file
@@ -33,53 +28,31 @@ class Adaptor {
     * @throws ClassNotFoundException
     */
    public Adaptor(final String file)
-      throws SQLException, ClassNotFoundException {
-      init(file);
-      migrate();
-      System.out.println ("migrated!");
-      populate();
+      throws SQLException, ClassNotFoundException, FileNotFoundException {
+      db = new DB(file);
+      // db.migrate();
+      // populate("times.txt");
    }
 
-   /**
-    * @param file
-    * @throws SQLException
-    * @throws ClassNotFoundException
-    */
-   private void init(final String file)
-      throws SQLException, ClassNotFoundException {
-      Class.forName("org.sqlite.JDBC");
-      db = DriverManager.getConnection("jdbc:sqlite:" + file);
-      query = db.createStatement();
-   }
 
-   /**
-    * @throws SQLException
-    */
-   private void migrate() throws SQLException {
-      query.executeUpdate("DROP TABLE IF EXISTS teams");
-      query.executeUpdate("CREATE TABLE teams ("
-            + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + "name VARCHAR(50) NOT NULL)");
-   }
-
-   private void populate() throws SQLException {
-      query.executeUpdate("INSERT into teams (name) VALUES ('FlashBack')");
-      query.executeUpdate("INSERT into teams (name) VALUES ('Bakon')");
+   private void populate(final String file)
+      throws SQLException, FileNotFoundException {
+      Scanner scanner = new Scanner(new File(file));
+      while (scanner.hasNext()) {
+         String name = scanner.nextLine();
+         db.insert("team", name, 0);
+      }
+      scanner.close();
    }
 
    public final List<RealTeam> getTeams() throws SQLException {
-      ResultSet results = query.executeQuery(
-            "SELECT * FROM teams ORDER BY id");
-      ArrayList<RealTeam> teams = new ArrayList<RealTeam>();
+      ResultSet results = db.query("team", 0);
+      List<RealTeam> teams = new ArrayList<RealTeam>();
       while (results.next()) {
-         System.out.println (results.getInt("id"));
-         String name = results.getString("name");
+         String name = results.getString("value");
          teams.add(new RealTeam(new Team(name)));
       }
       return teams;
    }
-
-
-
 
 }
