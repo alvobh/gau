@@ -2,12 +2,13 @@ package gau.state;
 
 import gau.models.RealTeam;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public final class State {
    
    private static boolean test;
-   private static ArrayList<RealTeam> teams;
+   private static List<RealTeam> teams;
+   private static Adaptor db;
 
    private State() {
    }
@@ -17,12 +18,13 @@ public final class State {
    }
 
    public static void init(String env) throws Exception{
+      db = new Adaptor("2011.db");
       setEnv(env);
       setTeams(env);
    }
 
    public static void setTeams(String env) throws Exception{
-      teams = Adaptor.getTeams();
+      teams = db.getTeams();
    }
 
    public static void setEnv(String env){
@@ -33,7 +35,7 @@ public final class State {
       }
    }
    
-   public static ArrayList<RealTeam> getTeams() {
+   public static List<RealTeam> getTeams() {
       return teams;
    }
 

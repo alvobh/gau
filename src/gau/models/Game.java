@@ -3,6 +3,7 @@ package gau.models;
 import gau.state.State;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author mateusgm
@@ -23,7 +24,7 @@ public class Game {
    /**
     * 
     */
-   private ArrayList<RealTeam> podium, teams;
+   private List<RealTeam> podium, teams;
 
    /**
     * 
@@ -49,7 +50,7 @@ public class Game {
    /**
     * @param teamsp
     */
-   public Game(final ArrayList<RealTeam> teamsp) {
+   public Game(final List<RealTeam> teamsp) {
       teams  = teamsp;
       podium = new ArrayList<RealTeam>();
    }
@@ -135,7 +136,7 @@ public class Game {
       podiumCheck = new boolean[teams.size()];
       place = 1;
       cancelled = false;
-      if (State.isTest()) {
+      if (!State.isTest()) {
          plugs = new PlugBoard();
       }
       return true;

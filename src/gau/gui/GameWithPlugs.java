@@ -100,7 +100,7 @@ public class GameWithPlugs extends JPanel {
       @Override
        public Void doInBackground() {
           try {
-             ArrayList<RealTeam> teams = State.getTeams();
+             List<RealTeam> teams = State.getTeams();
              prova = new Game(teams);
              if (prova.start()) {
                 while (!isCancelled() && prova.isActive()) {
