@@ -1,4 +1,4 @@
-package gau.db;
+package gau.state;
 
 import gau.models.RealTeam;
 

@@ -1,7 +1,7 @@
 package gau;
 
-import gau.db.State;
 import gau.gui.GuiMain;
+import gau.state.State;
 
 public class Main {
 

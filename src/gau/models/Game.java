@@ -1,6 +1,6 @@
 package gau.models;
 
-import gau.db.State;
+import gau.state.State;
 
 import java.util.ArrayList;
 

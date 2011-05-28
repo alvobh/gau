@@ -1,6 +1,6 @@
 package gau.gui;
 
-import gau.db.State;
+import gau.state.State;
 
 import java.awt.BorderLayout;
 

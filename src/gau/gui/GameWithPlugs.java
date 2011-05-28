@@ -1,8 +1,8 @@
 package gau.gui;
 
-import gau.db.State;
 import gau.models.Game;
 import gau.models.RealTeam;
+import gau.state.State;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
