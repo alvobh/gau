@@ -44,6 +44,11 @@ public class Game {
    boolean test;
 
    /**
+    * 
+    */
+   boolean cancelled;
+   
+   /**
     * @param teamsp
     */
    public Game(final ArrayList<RealTeam> teamsp) {
@@ -132,10 +137,15 @@ public class Game {
       test = testp;
       podiumCheck = new boolean[teams.size()];
       place = 1;
+      cancelled = false;
       if (!test) {
          plugs = new PlugBoard();
       }
       return true;
+   }
+   
+   public final void cancel () {
+      cancelled = true;
    }
 
    /**
@@ -153,7 +163,7 @@ public class Game {
    public final String resumeReal() throws Exception {
       boolean changed = false;
       String update = "";
-      while (!changed && podium.size() < teams.size()) {
+      while (!changed && !cancelled) {
          boolean[] active = plugs.read();
          int i = 0;
          while (i < active.length) {

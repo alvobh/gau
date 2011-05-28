@@ -101,6 +101,8 @@ public class GameWithPlugs extends JPanel {
 
    class GameRun extends SwingWorker<Void, String> {
 
+      private Game prova = null;
+      
       public GameRun() {
          cleanPanel();
          toggleButton();
@@ -110,7 +112,7 @@ public class GameWithPlugs extends JPanel {
        public Void doInBackground() {
           try {
              ArrayList<RealTeam> teams = Repo.getTeams();
-             Game prova = new Game(teams);
+             prova = new Game(teams);
              if (prova.start(test)) {
                 while (!isCancelled() && prova.isActive()) {
                    String update = prova.resume();
@@ -131,6 +133,7 @@ public class GameWithPlugs extends JPanel {
 
        @Override
        public void done() {
+          prova.cancel();
           toggleButton();
        }
 
