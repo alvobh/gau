@@ -7,11 +7,25 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public final class Repo {
+public final class State {
+   
+   private static boolean test = false;
 
-   private Repo() {
+   private State() {
+   }
+   
+   public static boolean isTest() {
+      return test;
    }
 
+   public static void init(String env) {
+      if (env.equals("test")) {
+         test = true;
+      } else {
+         test = false;
+      }
+   }
+   
    public static ArrayList<RealTeam> getTeams() throws Exception {
 
       Scanner scanner = new Scanner(new File("times.txt"));

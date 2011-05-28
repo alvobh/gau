@@ -1,5 +1,7 @@
 package gau.models;
 
+import gau.db.State;
+
 import java.util.ArrayList;
 
 /**
@@ -37,11 +39,7 @@ public class Game {
     * 
     */
    int place;
-   
-   /**
-    * 
-    */
-   boolean test;
+
 
    /**
     * 
@@ -133,12 +131,11 @@ public class Game {
     * @return
     * @throws Exception
     */
-   public final boolean start(boolean testp) throws Exception {
-      test = testp;
+   public final boolean start() throws Exception {
       podiumCheck = new boolean[teams.size()];
       place = 1;
       cancelled = false;
-      if (!test) {
+      if (State.isTest()) {
          plugs = new PlugBoard();
       }
       return true;
@@ -153,7 +150,7 @@ public class Game {
     * @throws Exception
     */
    public final String resume() throws Exception {
-      if (test) {
+      if (State.isTest()) {
          return resumeTest();
       } else {
          return resumeReal();

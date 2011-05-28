@@ -1,6 +1,6 @@
 package gau.gui;
 
-import gau.db.Repo;
+import gau.db.State;
 import gau.models.Game;
 import gau.models.RealTeam;
 
@@ -21,23 +21,12 @@ public class GameWithPlugs extends JPanel {
    private JTextPane jTextPane = null;
    private JButton jButton = null;
    private GameRun game = null;
-   private boolean test = false;
 
    /**
     * This is the default constructor.
     */
    public GameWithPlugs() {
       super();
-      initialize();
-   }
-
-   /**
-    * This is the default constructor.
-    * @param testp
-    */
-   public GameWithPlugs(final boolean testp) {
-      super();
-      test = testp;
       initialize();
    }
 
@@ -111,9 +100,9 @@ public class GameWithPlugs extends JPanel {
       @Override
        public Void doInBackground() {
           try {
-             ArrayList<RealTeam> teams = Repo.getTeams();
+             ArrayList<RealTeam> teams = State.getTeams();
              prova = new Game(teams);
-             if (prova.start(test)) {
+             if (prova.start()) {
                 while (!isCancelled() && prova.isActive()) {
                    String update = prova.resume();
                    publish(update);
