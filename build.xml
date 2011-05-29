@@ -41,13 +41,14 @@
             <classpath refid="one-jar.libraries"/>
             <classpath path="${one-jar.ant.jar}"/>
         </javac>
-        <!--
-        <javac destdir="classes/test" includes="**/*.java" debug="true">
+        
+        <javac destdir="classes" includes="**/*.java" debug="true">
             <src path="test" />
             <classpath refid="libraries" />
             <classpath refid="one-jar.libraries"/>
             <classpath path="${one-jar.ant.jar}"/>
         </javac>
+		<!--
         <javac destdir="classes/junit" includes="**/*.java" debug="true">
             <src path="junit" />
             <classpath refid="libraries" />
@@ -75,7 +76,7 @@
 		<one-jar destfile="build/test-gau.jar">
             <manifest>
                 <attribute name="Main-Class" value="gau.Boot"/>
-            	<attribute name="One-Jar-Main-Class" value="gau.tests.TestMain"/>
+            	<attribute name="One-Jar-Main-Class" value="gau.tests.Main"/>
             </manifest>
 			<main>
 				<fileset dir="classes"/>
@@ -116,9 +117,9 @@
     <target name="run.gau" depends="build" description="Run a One-Jar gau">
         <java fork="true" jar="build/gau.jar"/>
     </target>
-   <!--
+   
 	<target name="test.gau" depends="build" description="Stand-alone test a One-Jar gau">
         <java fork="true" jar="build/test-gau.jar"/>
     </target>
-	-->
+	
 </project>

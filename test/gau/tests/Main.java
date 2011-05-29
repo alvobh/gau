@@ -3,7 +3,7 @@ package gau.tests;
 import gau.gui.GuiMain;
 import gau.state.State;
 
-public class TestMain {
+public class Main {
 
    /**
     * @param args
