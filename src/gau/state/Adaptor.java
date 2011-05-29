@@ -5,11 +5,8 @@ import gau.models.Team;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -30,8 +27,8 @@ class Adaptor {
    public Adaptor(final String file)
       throws SQLException, ClassNotFoundException, FileNotFoundException {
       db = new DB(file);
-      // db.migrate();
-      // populate("times.txt");
+      db.migrate();
+      populate("times.txt");
    }
 
 
@@ -40,13 +37,14 @@ class Adaptor {
       Scanner scanner = new Scanner(new File(file));
       while (scanner.hasNext()) {
          String name = scanner.nextLine();
-         db.insert("team", name, 0);
+         int id = db.insert("name", name);
+         db.insert(0, "team", id + "");
       }
       scanner.close();
    }
 
    public final List<RealTeam> getTeams() throws SQLException {
-      ResultSet results = db.query("team", 0);
+      ResultSet results = db.query(0);
       List<RealTeam> teams = new ArrayList<RealTeam>();
       while (results.next()) {
          String name = results.getString("value");
