@@ -70,12 +70,12 @@ class DB {
       return results.getInt(1);
    }
 
-   private void update(final int id, final String value,
-         final int holder) throws SQLException {
+   private void update(final int id, final String key,
+         final String value) throws SQLException {
       String statement = "UPDATE things "
                           + "SET value = '" + value + "' "
-                          + "AND id_holder = " + holder + " "
-                          + "WHERE id = " + id;
+                          + "WHERE id = " + id + " "
+                          + "AND key = '" + key + "'";
       query.executeUpdate(statement);
    }
 
