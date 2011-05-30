@@ -61,23 +61,24 @@ class Adaptor {
       Set<Team> teams = rteam.getTeams();
       for (Team team : teams) {
          save (team);
-         relate(rteam, "team", team);
+         relate(rteam, team);
       }
 
    }
 
-   private void create (Team team) {
+   private void create (GauType entity) {
       try {
-         long id = db.insert("type", "team");
-         team.getID();
+         long id = db.insert("type", entity.getClass().getSimpleName());
+         entity.setID(id);
       } catch (SQLException e) {
          System.out.println ("Couldnt save team");
       }
    }
-   
-   private void relate (GauType master, String relation, GauType thing) {
+
+   private void relate (GauType master, GauType thing) {
       try {
-         db.insert(master.getID(), relation, thing.getID() + "");
+         db.insert(master.getID(), thing.getClass().getSimpleName(),
+               thing.getID() + "");
       } catch (SQLException e) {
          System.out.println ("Couldn't relate GauType");
       }
@@ -92,7 +93,7 @@ class Adaptor {
    }
 
    public final List<RealTeam> getTeams() throws SQLException {
-      ResultSet results = db.get(0);
+      ResultSet results = db.get(Team.class.getSimpleName());
       List<RealTeam> teams = new ArrayList<RealTeam>();
       while (results.next()) {
          String name = results.getString("value");

@@ -1,11 +1,13 @@
 package gau.models;
 
+import gau.state.GauType;
+
 /**
  * Entity that models a team.
  * @author mateusgm
  *
  */
-public class Team implements Comparable<Team> {
+public class Team implements Comparable<Team>, GauType {
 
    /**
     * Name of the team.
@@ -38,11 +40,11 @@ public class Team implements Comparable<Team> {
    }
 
    public final void setID(long idp) {
-      id = idp;      
+      id = idp;
    }
-   
+
    public final long getID() {
-      return id;   
+      return id;
    }
 
    public final String getName() {
