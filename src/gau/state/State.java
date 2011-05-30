@@ -8,7 +8,7 @@ public final class State {
    
    private static boolean test;
    private static List<RealTeam> teams;
-   private static Adaptor db;
+   private static Persistence db;
 
    private State() {
    }
@@ -18,7 +18,7 @@ public final class State {
    }
 
    public static void init(String env) throws Exception{
-      db = new Adaptor("2011.db");
+      db = new Persistence();
       setEnv(env);
       setTeams(env);
    }

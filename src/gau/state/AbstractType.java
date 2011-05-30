@@ -1,6 +1,6 @@
 package gau.state;
 
-public interface GauType {
+public interface AbstractType {
 
    long getID();
    void setID(long id);

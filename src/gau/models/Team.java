@@ -1,13 +1,13 @@
 package gau.models;
 
-import gau.state.GauType;
+import gau.state.AbstractType;
 
 /**
  * Entity that models a team.
  * @author mateusgm
  *
  */
-public class Team implements Comparable<Team>, GauType {
+public class Team implements Comparable<Team>, AbstractType {
 
    /**
     * Name of the team.

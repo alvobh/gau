@@ -1,6 +1,6 @@
 package gau.models;
 
-import gau.state.GauType;
+import gau.state.AbstractType;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -9,7 +9,7 @@ import java.util.TreeSet;
  * @author mateusgm
  *
  */
-public class RealTeam implements GauType {
+public class RealTeam implements AbstractType {
 
    /**
     * the teams contained on this RealTeam.

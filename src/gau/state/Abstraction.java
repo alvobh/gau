@@ -3,20 +3,12 @@ package gau.state;
 import gau.models.RealTeam;
 import gau.models.Team;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
 
-/**
- * @author mateusgm
- *
- */
-class Adaptor {
+public class Abstraction {
 
    private DB db;
 
@@ -25,31 +17,19 @@ class Adaptor {
     * @throws SQLException
     * @throws ClassNotFoundException
     */
-   public Adaptor(final String file)
-      throws SQLException, ClassNotFoundException, FileNotFoundException {
-      db = new DB(file);
-      db.migrate();
-      populate("times.txt");
-   }
-
-   public final void save (Team team) {
-      create(team);
-      relate (team, "name", team.getName());
-   }
-
-   public final void save (RealTeam rteam) {
-      create(rteam);
-      Set<Team> teams = rteam.getTeams();
-      for (Team team : teams) {
-         save (team);
-         relate(rteam, team);
+   public Abstraction() {
+      try {
+         db = new DB("2011.db");
+         db.migrate();
+      } catch (Exception e) {
+         System.out.println("Couldn't init db!");
       }
    }
 
-   public final List<GauType> get(String type) {
+   public final List<AbstractType> get(String type) {
       try {
          ResultSet query = db.get("type", type);
-         List<GauType> results = new ArrayList<GauType>();
+         List<AbstractType> results = new ArrayList<AbstractType>();
          while (query.next()) {
             long id = query.getLong("id");
             RealTeam rteam = new RealTeam(id);
@@ -58,12 +38,12 @@ class Adaptor {
          }
          return results;
       } catch (SQLException e) {
-         System.out.println("Couldnt get list of entities!");
+         System.out.println("Couldn't get list of entities!");
          return null;
       }
    }
 
-   public final void get (GauType entity) {
+   public final void get (AbstractType entity) {
       try {
          ResultSet results = db.get(entity.getID());
          String type = "";
@@ -96,65 +76,36 @@ class Adaptor {
             }
          }
       } catch (SQLException e) {
-         System.out.println("Couldnt get entity!");
+         System.out.println("Couldn't get entity!");
       }
    }
-   
-   private void create(GauType entity) {
+
+   public final void create(AbstractType entity) {
       try {
          long id = db.insert("type", entity.getClass().getSimpleName());
          entity.setID(id);
       } catch (SQLException e) {
-         System.out.println("Couldnt save GauType");
+         System.out.println("Couldn't save entity");
       }
    }
 
-   private void relate(final GauType master, final GauType thing) {
+   public final void relate(final AbstractType master,
+         final AbstractType thing) {
       try {
          db.insert(master.getID(), thing.getClass().getSimpleName(),
                thing.getID() + "");
       } catch (SQLException e) {
-         System.out.println("Couldn't relate GauType");
+         System.out.println("Couldn't relate entities");
       }
    }
 
-   private void relate(final GauType master, final String relation,
-         final String thing) {
+   public final void relate(final AbstractType master,
+         final String relation, final String thing) {
       try {
          db.insert(master.getID(), relation, thing);
       } catch (SQLException e) {
-         System.out.println("Couldn't relate GauType");
+         System.out.println("Couldn't create relation");
       }
-   }
-   
-   // temp methods:
-
-   public List<RealTeam> getTeams() {
-      List<GauType> query = get(RealTeam.class.getSimpleName());
-      List<RealTeam> results = new ArrayList<RealTeam>();
-      for (GauType gt : query) {
-         RealTeam rteam = (RealTeam) gt;
-         results.add(rteam);
-      }
-      return results;
-   }   
-
-   private void populate(final String file)
-         throws FileNotFoundException {
-      Scanner scanner = new Scanner(new File(file));
-      RealTeam rteam = new RealTeam();
-      while (scanner.hasNext()) {
-         String name = scanner.nextLine();
-         if (name.charAt(0) == ' ') {
-            Team team = new Team(name.substring(1));
-            rteam.add(team);
-         } else {
-             Team team = new Team(name);
-             rteam = new RealTeam(team);
-             save(rteam);
-         }
-      }
-      scanner.close();
    }
 
 }
