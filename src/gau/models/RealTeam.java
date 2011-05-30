@@ -37,6 +37,11 @@ public class RealTeam implements GauType {
       teams.add(t);
    }
 
+   public RealTeam(long idp) {
+      setID(idp);
+      teams = new TreeSet<Team>();
+   }
+
    /**
     * Adds a Team to a RealTeam.
     * @param t - the team to be added to the RealTeam.
@@ -67,6 +72,9 @@ public class RealTeam implements GauType {
          } else {
             results += ", " + team.toString();
          }
+      }
+      if (results == null) {
+         results = "" + getID();
       }
       return results;
    }

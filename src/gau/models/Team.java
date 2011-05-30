@@ -23,7 +23,11 @@ public class Team implements Comparable<Team>, GauType {
     * @param namep - name of the team.
     */
    public Team(final String namep) {
-      name = namep;
+      setName(namep);
+   }
+
+   public Team(long idp) {
+      setID(idp);
    }
 
    /* (non-Javadoc)
@@ -49,6 +53,10 @@ public class Team implements Comparable<Team>, GauType {
 
    public final String getName() {
       return name;
+   }
+
+   public void setName(String namep) {
+      name = namep;      
    }
 
 }
