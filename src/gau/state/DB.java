@@ -53,7 +53,7 @@ class DB {
       return query.executeQuery(statement);
    }
 
-   public final int insert(final String key, final String value)
+   public final long insert(final String key, final String value)
          throws SQLException {
       String statement = "INSERT into data (id,key,value) "
                           + "VALUES (last_insert_rowid()+1, "
@@ -61,18 +61,16 @@ class DB {
                                   + "'" + value  + "')";
       query.executeUpdate(statement);
       ResultSet results = query.getGeneratedKeys();
-      return results.getInt(1);
+      return results.getLong(1);
    }
 
-   public final int insert(final int id, final String key,
+   public final void insert(final long id, final String key,
          final String value) throws SQLException {
       String statement = "INSERT into data (id,key,value) "
                           + "VALUES (" + id      + ", "
                                   + "'" + key    + "', "
                                   + "'" + value  + "')";
       query.executeUpdate(statement);
-      ResultSet results = query.getGeneratedKeys();
-      return results.getInt(1);
    }
 
    public final void update(final int id, final String key,

@@ -1,5 +1,6 @@
 package gau.models;
 
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -11,7 +12,12 @@ public class RealTeam {
    /**
     * the teams contained on this RealTeam.
     */
-   private TreeSet<Team> teams;
+   private Set<Team> teams;
+
+   /**
+    * Name of the team.
+    */
+   private long id;
 
    /**
     * Creates a RealTeam.
@@ -61,6 +67,18 @@ public class RealTeam {
          }
       }
       return results;
+   }
+
+   public final void setID(long idp) {
+      id = idp;
+   }
+
+   public final long getID() {
+      return id;
+   }
+
+   public final Set<Team> getTeams() {
+      return teams;
    }
 
 }

@@ -13,6 +13,11 @@ public class Team implements Comparable<Team> {
    private String name;
 
    /**
+    * Name of the team.
+    */
+   private long id;
+
+   /**
     * @param namep - name of the team.
     */
    public Team(final String namep) {
@@ -29,6 +34,18 @@ public class Team implements Comparable<Team> {
 
    @Override
    public final String toString() {
+      return name;
+   }
+
+   public final void setID(long idp) {
+      id = idp;      
+   }
+   
+   public final long getID() {
+      return id;   
+   }
+
+   public final String getName() {
       return name;
    }
 
