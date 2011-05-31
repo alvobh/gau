@@ -37,7 +37,7 @@ public class RealTeam implements AbstractType {
       teams.add(t);
    }
 
-   public RealTeam(long idp) {
+   public RealTeam(final long idp) {
       setID(idp);
       teams = new TreeSet<Team>();
    }
@@ -60,6 +60,32 @@ public class RealTeam implements AbstractType {
       return teams.contains(t);
    }
 
+   public final Set<Team> getTeams() {
+      return teams;
+   }
+
+   @Override
+   public final void setID(final long idp) {
+      id = idp;
+   }
+
+   @Override
+   public final long getID() {
+      return id;
+   }
+
+   @Override
+   public final void set(final AbstractType slave) {
+      if (slave.getClass() == Team.class) {
+         add((Team) slave);
+      }
+   }
+
+   @Override
+   public final void set(final String key, final  String value) {
+      return;
+   }
+
    /* (non-Javadoc)
     * @see java.lang.Object#toString()
     */
@@ -77,18 +103,6 @@ public class RealTeam implements AbstractType {
          results = "" + getID();
       }
       return results;
-   }
-
-   public final void setID(long idp) {
-      id = idp;
-   }
-
-   public final long getID() {
-      return id;
-   }
-
-   public final Set<Team> getTeams() {
-      return teams;
    }
 
 }

@@ -26,63 +26,52 @@ public class Abstraction {
       }
    }
 
-   public final List<AbstractType> get(String type) {
+   public final List<AbstractType> get(Class<? extends AbstractType> type) {
       try {
-         ResultSet query = db.get("type", type);
+         ResultSet query = db.get("type", name(type));
          List<AbstractType> results = new ArrayList<AbstractType>();
          while (query.next()) {
+            AbstractType entity = type.newInstance();
             long id = query.getLong("id");
-            RealTeam rteam = new RealTeam(id);
-            results.add(rteam);
-            get(rteam);
+            entity.setID(id);
+            results.add(entity);
+            complete(entity);
          }
          return results;
-      } catch (SQLException e) {
-         System.out.println("Couldn't get list of entities!");
+      } catch (Exception e) {
+         System.out.println("Couldn't get list of entities! " + e);
          return null;
       }
    }
 
-   public final void get (AbstractType entity) {
+   @SuppressWarnings("unchecked")
+   public final void complete(final AbstractType entity) {
       try {
          ResultSet results = db.get(entity.getID());
-         String type = "";
+         results.next();
          while (results.next()) {
             String key = results.getString("key");
-            if (key.equals("type")) {
-               type = results.getString("value");
-            }
-            break;
-         }
-         if (type.equals("RealTeam")) {
-            RealTeam rteam = (RealTeam) entity;
-            while (results.next()) {
-               String key = results.getString("key");
-               if (key.equals("Team")) {
-                  long id = results.getLong("value");
-                  Team team = new Team(id);
-                  rteam.add(team);
-                  get(team);
-               }
-            }
-         } else if (type.equals("Team")) {
-            Team team = (Team) entity;
-            while (results.next()) {
-               String key = results.getString("key");
-               if (key.equals("name")) {
-                  String name = results.getString("value");
-                  team.setName(name);
-               }
+            try {
+               Class<AbstractType> stype =
+                  (Class<AbstractType>) Class.forName(key);
+               AbstractType slave = stype.newInstance();
+               long id = results.getLong("value");
+               slave.setID(id);
+               entity.set(slave);
+               complete(slave);
+            } catch (ClassNotFoundException e) {
+               String value = results.getString("value");
+               entity.set(key, value);
             }
          }
-      } catch (SQLException e) {
+      } catch (Exception e) {
          System.out.println("Couldn't get entity!");
       }
    }
 
-   public final void create(AbstractType entity) {
+   public final void create(final AbstractType entity) {
       try {
-         long id = db.insert("type", entity.getClass().getSimpleName());
+         long id = db.insert("type", name(entity));
          entity.setID(id);
       } catch (SQLException e) {
          System.out.println("Couldn't save entity");
@@ -90,10 +79,10 @@ public class Abstraction {
    }
 
    public final void relate(final AbstractType master,
-         final AbstractType thing) {
+         final AbstractType slave) {
       try {
-         db.insert(master.getID(), thing.getClass().getSimpleName(),
-               thing.getID() + "");
+         db.insert(master.getID(), name(slave),
+               slave.getID() + "");
       } catch (SQLException e) {
          System.out.println("Couldn't relate entities");
       }
@@ -106,6 +95,14 @@ public class Abstraction {
       } catch (SQLException e) {
          System.out.println("Couldn't create relation");
       }
+   }
+
+   private String name (Class<? extends AbstractType> type) {
+      return type.getName();
+   }
+
+   private String name (AbstractType entity) {
+      return name(entity.getClass());
    }
 
 }

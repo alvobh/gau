@@ -19,6 +19,15 @@ public class Team implements Comparable<Team>, AbstractType {
     */
    private long id;
 
+   public Team() {
+      setID(0);
+      setName(null);
+   }
+
+   public Team(final long idp) {
+      setID(idp);
+   }
+
    /**
     * @param namep - name of the team.
     */
@@ -26,8 +35,34 @@ public class Team implements Comparable<Team>, AbstractType {
       setName(namep);
    }
 
-   public Team(long idp) {
-      setID(idp);
+   public final String getName() {
+      return name;
+   }
+
+   public final void setName(final String namep) {
+      name = namep;
+   }
+
+   @Override
+   public final void setID(final long idp) {
+      id = idp;
+   }
+
+   @Override
+   public final long getID() {
+      return id;
+   }
+
+   @Override
+   public final void set(final AbstractType slave) {
+      return;
+   }
+
+   @Override
+   public final void set(final String key, final String value) {
+      if (key.equals("name")) {
+         setName(value);
+      }
    }
 
    /* (non-Javadoc)
@@ -41,22 +76,6 @@ public class Team implements Comparable<Team>, AbstractType {
    @Override
    public final String toString() {
       return name;
-   }
-
-   public final void setID(long idp) {
-      id = idp;
-   }
-
-   public final long getID() {
-      return id;
-   }
-
-   public final String getName() {
-      return name;
-   }
-
-   public void setName(String namep) {
-      name = namep;      
    }
 
 }

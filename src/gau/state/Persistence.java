@@ -40,7 +40,7 @@ class Persistence {
    // temp methods:
 
    public List<RealTeam> getTeams() {
-      List<AbstractType> query = db.get(RealTeam.class.getSimpleName());
+      List<AbstractType> query = db.get(RealTeam.class);
       List<RealTeam> results = new ArrayList<RealTeam>();
       for (AbstractType gt : query) {
          RealTeam rteam = (RealTeam) gt;
