@@ -91,16 +91,10 @@ class DB {
             + "value VARCHAR(50) NOT NULL)");
    }
 
-   public final void debug() throws SQLException {
+   public final ResultSet debug() throws SQLException {
       String query = "SELECT * FROM data ORDER BY id ASC";
       Statement stm = db.createStatement();
-      ResultSet results = stm.executeQuery(query);
-      while (results.next()) {
-         long id = results.getLong("id");
-         String key = results.getString("key");
-         String value = results.getString("value");
-         System.out.println(id + ", '" + key + "', '" + value + "'");
-      }
+      return stm.executeQuery(query);
    }
 
 }

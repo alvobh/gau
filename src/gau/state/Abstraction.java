@@ -1,12 +1,11 @@
 package gau.state;
 
-import gau.models.RealTeam;
-import gau.models.Team;
-
+import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Abstraction {
 
@@ -26,7 +25,36 @@ public class Abstraction {
       }
    }
 
-   public final List<AbstractType> get(Class<? extends AbstractType> type) {
+   @SuppressWarnings("unchecked")
+   public final void save(final AbstractType entity) {
+      try {
+         create(entity);
+         Field[] fields = entity.getClass().getFields();
+         for (Field field : fields) {
+            String name = field.getName();
+            Class<?> type = field.getType();
+            if (type.isAssignableFrom(AbstractType.class)) {
+               AbstractType slave = (AbstractType) field.get(entity);
+               save(slave);
+               relate(entity, slave);
+            } else if (type.isAssignableFrom(Set.class)) {
+               Set<AbstractType> slaves = (Set<AbstractType>) field.get(entity);
+               for (AbstractType slave : slaves) {
+                  save(slave);
+                  relate(entity, slave);
+               }
+            } else if (type.isAssignableFrom(String.class)) {
+               String slave = (String) field.get(entity);
+               relate(entity, name, slave);
+            }
+         }
+      } catch (Exception e) {
+         System.out.println("Couldn't save entity! " + e);
+      }
+   }
+
+   public final List<AbstractType> get(
+         final Class<? extends AbstractType> type) {
       try {
          ResultSet query = db.get("type", name(type));
          List<AbstractType> results = new ArrayList<AbstractType>();
@@ -39,7 +67,7 @@ public class Abstraction {
          }
          return results;
       } catch (Exception e) {
-         System.out.println("Couldn't get list of entities! " + e);
+         System.out.println("Couldn't get list of entities!");
          return null;
       }
    }
@@ -94,6 +122,20 @@ public class Abstraction {
          db.insert(master.getID(), relation, thing);
       } catch (SQLException e) {
          System.out.println("Couldn't create relation");
+      }
+   }
+
+   public final void debug() {
+      try {
+         ResultSet results = db.debug();
+         while (results.next()) {
+            long id = results.getLong("id");
+            String key = results.getString("key");
+            String value = results.getString("value");
+            System.out.println(id + ", '" + key + "', '" + value + "'");
+         }
+      } catch (SQLException e) {
+         System.out.println("Couldn't debug");
       }
    }
 
