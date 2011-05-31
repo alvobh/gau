@@ -12,7 +12,7 @@ public class Team implements Comparable<Team>, AbstractType {
    /**
     * Name of the team.
     */
-   private String name;
+   public String name;
 
    /**
     * Name of the team.
@@ -54,7 +54,7 @@ public class Team implements Comparable<Team>, AbstractType {
    }
 
    @Override
-   public final void set(final AbstractType slave) {
+   public final void set(final String key, final AbstractType slave) {
       return;
    }
 

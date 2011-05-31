@@ -36,12 +36,12 @@ public class Abstraction {
             if (type.isAssignableFrom(AbstractType.class)) {
                AbstractType slave = (AbstractType) field.get(entity);
                save(slave);
-               relate(entity, slave);
+               relate(entity, name, slave);
             } else if (type.isAssignableFrom(Set.class)) {
                Set<AbstractType> slaves = (Set<AbstractType>) field.get(entity);
                for (AbstractType slave : slaves) {
                   save(slave);
-                  relate(entity, slave);
+                  relate(entity, name, slave);
                }
             } else if (type.isAssignableFrom(String.class)) {
                String slave = (String) field.get(entity);
@@ -78,18 +78,18 @@ public class Abstraction {
          ResultSet results = db.get(entity.getID());
          results.next();
          while (results.next()) {
-            String key = results.getString("key");
-            try {
+            String[] key = results.getString("key").split(":");
+            if (key.length > 1) {
                Class<AbstractType> stype =
-                  (Class<AbstractType>) Class.forName(key);
+                  (Class<AbstractType>) Class.forName(key[0]);
                AbstractType slave = stype.newInstance();
                long id = results.getLong("value");
                slave.setID(id);
-               entity.set(slave);
+               entity.set(key[1], slave);
                complete(slave);
-            } catch (ClassNotFoundException e) {
+            } else {
                String value = results.getString("value");
-               entity.set(key, value);
+               entity.set(key[0], value);
             }
          }
       } catch (Exception e) {
@@ -107,19 +107,19 @@ public class Abstraction {
    }
 
    public final void relate(final AbstractType master,
-         final AbstractType slave) {
-      try {
-         db.insert(master.getID(), name(slave),
-               slave.getID() + "");
-      } catch (SQLException e) {
-         System.out.println("Couldn't relate entities");
-      }
+         final String relation, final AbstractType thing) {
+      relate(master.getID(), name(thing) + ":" + relation, thing.getID() + "");
    }
 
    public final void relate(final AbstractType master,
          final String relation, final String thing) {
+      relate(master.getID(), relation , thing);
+   }
+
+   public final void relate(final long id, final String key,
+         final String value) {
       try {
-         db.insert(master.getID(), relation, thing);
+         db.insert(id, key, value);
       } catch (SQLException e) {
          System.out.println("Couldn't create relation");
       }

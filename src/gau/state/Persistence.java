@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  * @author mateusgm
@@ -21,20 +20,6 @@ class Persistence {
    public Persistence() throws FileNotFoundException {
       db = new Abstraction();
       populate("times.txt");
-   }
-
-   public final void save (Team team) {
-      db.create(team);
-      db.relate(team, "name", team.getName());
-   }
-
-   public final void save (RealTeam rteam) {
-      db.create(rteam);
-      Set<Team> teams = rteam.getTeams();
-      for (Team team : teams) {
-         save(team);
-         db.relate(rteam, team);
-      }
    }
 
    // temp methods:
@@ -61,7 +46,7 @@ class Persistence {
          } else {
              Team team = new Team(name);
              rteam = new RealTeam(team);
-             save(rteam);
+             db.save(rteam);
          }
       }
       scanner.close();

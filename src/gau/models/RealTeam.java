@@ -14,7 +14,7 @@ public class RealTeam implements AbstractType {
    /**
     * the teams contained on this RealTeam.
     */
-   private Set<Team> teams;
+   public Set<Team> teams;
 
    /**
     * Name of the team.
@@ -75,8 +75,8 @@ public class RealTeam implements AbstractType {
    }
 
    @Override
-   public final void set(final AbstractType slave) {
-      if (slave.getClass() == Team.class) {
+   public final void set(final String key, final AbstractType slave) {
+      if (key.equals("teams") && slave.getClass() == Team.class) {
          add((Team) slave);
       }
    }
