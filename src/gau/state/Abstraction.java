@@ -19,7 +19,6 @@ public class Abstraction {
    public Abstraction() {
       try {
          db = new DB("2011.db");
-         db.migrate();
       } catch (Exception e) {
          System.out.println("Couldn't init db!");
       }
@@ -43,7 +42,8 @@ public class Abstraction {
                   save(slave);
                   relate(entity, name, slave);
                }
-            } else if (type.isAssignableFrom(String.class)) {
+            } else if (type.isAssignableFrom(String.class)
+                        || type.isPrimitive()) {
                String slave = (String) field.get(entity);
                relate(entity, name, slave);
             }
@@ -63,7 +63,7 @@ public class Abstraction {
             long id = query.getLong("id");
             entity.setID(id);
             results.add(entity);
-            complete(entity);
+            fill(entity);
          }
          return results;
       } catch (Exception e) {
@@ -73,7 +73,7 @@ public class Abstraction {
    }
 
    @SuppressWarnings("unchecked")
-   public final void complete(final AbstractType entity) {
+   public final void fill(final AbstractType entity) {
       try {
          ResultSet results = db.get(entity.getID());
          results.next();
@@ -86,7 +86,7 @@ public class Abstraction {
                long id = results.getLong("value");
                slave.setID(id);
                entity.set(key[1], slave);
-               complete(slave);
+               fill(slave);
             } else {
                String value = results.getString("value");
                entity.set(key[0], value);
@@ -145,6 +145,31 @@ public class Abstraction {
 
    private String name(final AbstractType entity) {
       return name(entity.getClass());
+   }
+
+   public final void clean() {
+      try {
+         db.clean();
+      } catch (SQLException e) {
+         System.out.println("Couldn't clean DB");
+      }
+   }
+
+   public final void make() {
+      try {
+         db.make();
+      } catch (SQLException e) {
+         System.out.println("Couldn't make DB (create tables)");
+      }
+   }
+
+   public final void close() {
+      try {
+         db.close();
+         db = null;
+      } catch (SQLException e) {
+         System.out.println("Couldn't close connection");
+      }
    }
 
 }

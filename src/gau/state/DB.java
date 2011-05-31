@@ -1,6 +1,5 @@
 package gau.state;
 
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -79,22 +78,28 @@ class DB {
       stm.executeUpdate(query);
    }
 
-   /**
-    * @throws SQLException
-    */
-   public void migrate() throws SQLException {
+   public final ResultSet debug() throws SQLException {
+      String query = "SELECT * FROM data ORDER BY id ASC";
+      Statement stm = db.createStatement();
+      return stm.executeQuery(query);
+   }
+
+   public final void clean() throws SQLException {
       Statement stm = db.createStatement();
       stm.executeUpdate("DROP TABLE IF EXISTS data");
+   }
+
+   public final void make() throws SQLException {
+      Statement stm = db.createStatement();
       stm.executeUpdate("CREATE TABLE data ("
             + "id INTEGER NOT NULL,"
             + "key VARCHAR(50) NOT NULL,"
             + "value VARCHAR(50) NOT NULL)");
    }
 
-   public final ResultSet debug() throws SQLException {
-      String query = "SELECT * FROM data ORDER BY id ASC";
-      Statement stm = db.createStatement();
-      return stm.executeQuery(query);
+   public final void close() throws SQLException {
+      db.close();
+      db = null;
    }
 
 }
