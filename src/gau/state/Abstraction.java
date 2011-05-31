@@ -97,11 +97,11 @@ public class Abstraction {
       }
    }
 
-   private String name (Class<? extends AbstractType> type) {
+   private String name(final Class<? extends AbstractType> type) {
       return type.getName();
    }
 
-   private String name (AbstractType entity) {
+   private String name(final AbstractType entity) {
       return name(entity.getClass());
    }
 
